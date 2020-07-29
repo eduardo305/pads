@@ -1,0 +1,10 @@
+{
+  "eslint.packageManager": "yarn",
+  "prettier.packageManager": "yarn",
+  "eslint.format.enable": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "editor.formatOnSave": true,
+  "prettier.requireConfig": true
+}

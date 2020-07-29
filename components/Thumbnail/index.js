@@ -81,7 +81,7 @@ const Thumbnail = ({ pad }) => {
             <FavoriteBorderOutlined />
           </div>
           <CardContent>
-            <Typography variant="subtitle1" color="textSecondary">
+            <Typography variant="overline" color="textSecondary">
               4,300/mo
             </Typography>
             <Typography gutterBottom variant="body2">

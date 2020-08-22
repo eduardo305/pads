@@ -13,6 +13,7 @@ import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import Paper from "@material-ui/core/Paper";
 import {
   LocalHotelOutlined,
   SquareFootOutlined,
@@ -20,19 +21,20 @@ import {
   FavoriteBorderOutlined,
   SortByAlphaOutlined,
   FilterList,
-  MoreVertOutlined
+  MoreVertOutlined,
+  Devices,
+  PetsOutlined,
+  WeekendOutlined
 } from "@material-ui/icons";
+
+import Gallery from "../../components/Gallery";
 
 const useStyles = makeStyles(theme => ({
   container: {
-    maxWidth: 1024,
     height: "100%",
-    margin: "auto",
-    // backgroundColor: "beige",
-    padding: 10,
     display: "grid",
-    gridTemplateRows: `40% 1fr`,
-    gridTemplateColumns: "70% minmax(300px, 1fr)",
+    gridTemplateRows: `300px 1fr`,
+    gridTemplateColumns: "2fr minmax(280px, 1fr)",
     gridGap: 20
   },
   gallery: {
@@ -44,22 +46,68 @@ const useStyles = makeStyles(theme => ({
   },
   listItem: {
     padding: "8px 0"
+  },
+  highlights: {
+    display: "flex",
+    marginBottom: 20,
+    "& > *": {
+      marginRight: theme.spacing(1)
+    }
+  },
+  chip: {
+    padding: theme.spacing(1)
   }
 }));
+
+const highlights = ["Virtual tour available", "Pet friendly", "Furnished"];
 
 const Details = ({ pad }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      <div className={classes.gallery}></div>
+      <div className={classes.gallery}>
+        <Gallery />
+      </div>
       <div className={classes.content}>
         <Typography variant="h5" component="h1">
-          4 Bed 3Bath charming house
+          4 Bed 3Bath charming apartment
         </Typography>
         <Typography variant="overline" component="h2" paragraph>
           1055 East Evelyn Avenue, Sunnyvale, CA 94086
         </Typography>
+
+        <Paper component="ul" elevation={0} className={classes.highlights}>
+          {highlights.map((data, i) => {
+            let icon;
+
+            if (data === "Virtual tour available") {
+              icon = <Devices />;
+            }
+
+            if (data === "Pet friendly") {
+              icon = <PetsOutlined />;
+            }
+
+            if (data === "Furnished") {
+              icon = <WeekendOutlined />;
+            }
+
+            return (
+              <li key={i}>
+                <Chip
+                  icon={icon}
+                  size="small"
+                  variant="outlined"
+                  color="secondary"
+                  label={data}
+                  className={classes.chip}
+                />
+              </li>
+            );
+          })}
+        </Paper>
+
         <Typography variant="body1" paragraph>
           This Katy two-story home offers a fireplace, and a two-car garage.
           This home is vacant and cleaned regularly. This Katy two-story home

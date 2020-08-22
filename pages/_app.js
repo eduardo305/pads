@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
 import theme from "../themes/theme";
+
+import SearchBar from "../components/SearchBar";
+import Header from "../components/Header";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -28,14 +32,34 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
-        <style jsx global>{`
-          html,
-          body,
-          #__next {
-            height: 100%;
-          }
-        `}</style>
+        <Container maxWidth="xl">
+          {/* <Header /> */}
+
+          <Component {...pageProps} />
+          <style jsx global>{`
+            html,
+            body,
+            #__next,
+            .MuiContainer-root {
+              height: 100%;
+            }
+
+            ul {
+              list-style-type: none;
+              padding: 0;
+              margin: 0;
+            }
+
+            div {
+              box-sizing: border-box;
+            }
+
+            .MuiContainer-root {
+              padding-left: 0 !important;
+              padding-right: 0 !important;
+            }
+          `}</style>
+        </Container>
       </ThemeProvider>
     </React.Fragment>
   );

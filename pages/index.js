@@ -58,8 +58,7 @@ const useStyles = makeStyles(theme => ({
     gap: "20px",
     listStyleType: "none",
     padding: 0,
-    margin: 0,
-    maxWidth: 920
+    margin: 0
   }
 }));
 
@@ -88,10 +87,10 @@ export default function Home() {
       </Head>
 
       <main>
-        <Header />
-        <SearchBar />
+        {/* <Header /> */}
+        {/* <SearchBar /> */}
         <div className={classes.resultsCount}>
-          {`${pads.length} homes found in Sunnyvale, CA`}
+          {`${pads.length} properties found in Sunnyvale, CA`}
           <ul className={classes.resultsControls}>
             <li className={classes.control}>
               <MuiLink
@@ -155,17 +154,6 @@ export default function Home() {
       </main>
 
       <footer></footer>
-
-      <style jsx>{`
-        main {
-          max-width: 920px;
-          margin: auto;
-          padding: 0 20px;
-        }
-
-        .container {
-        }
-      `}</style>
 
       <style jsx global>{`
         html,

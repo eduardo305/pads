@@ -6,8 +6,12 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
+import Box from "@material-ui/core/Box";
+import Badge from "@material-ui/core/Badge";
 import {
   LocalHotelOutlined,
   SquareFootOutlined,
@@ -24,16 +28,21 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%", // 16:9
+    boxShadow: "2px 1px 20px #333",
+    borderRadius: 4,
+    filter: `brightness(0.9)`
   },
   favoriteIcon: {
     display: "flex",
     alignItems: "center",
     position: "absolute",
     top: 10,
-    left: 10,
-    padding: 5,
-    backgroundColor: `#fff`,
+    right: 10,
+    padding: 2,
+    color: "#fff",
+    // backgroundColor: `#fff`,
+    opacity: 0.8,
     borderRadius: "50%",
     cursor: "pointer"
   },
@@ -62,6 +71,31 @@ const useStyles = makeStyles(theme => ({
     fontSize: 16,
     display: "flex",
     alignItems: "center"
+  },
+  customOverline: {
+    fontSize: "0.6rem",
+    letterSpacing: 1,
+    lineHeight: 2
+  },
+  actionContainer: {
+    padding: "5px 16px",
+    justifyContent: "space-between"
+  },
+  chip: {
+    position: "absolute",
+    top: 10,
+    left: 10
+  },
+  priceBox: {
+    backgroundColor: "#dee5f3",
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    color: "#2063e6",
+    fontWeight: "600",
+    marginTop: 10,
+    width: "max-content",
+    borderRadius: 4
   }
 }));
 
@@ -71,38 +105,42 @@ const Thumbnail = ({ pad }) => {
   return (
     <Link href={`/details/[id]`} as={`/details/${pad}`}>
       {pad ? (
-        <Card className={classes.card}>
+        <Card className={classes.card} elevation={0}>
           <CardMedia
             className={classes.media}
             image="https://img.zumpercdn.com/301433983/1280x960?auto=format&w=1691&h=955&fit=fill"
             title="Tan Plaza Apartment"
           />
           <div className={classes.favoriteIcon}>
-            <FavoriteBorderOutlined />
+            <FavoriteBorderOutlined fontSize="small" />
           </div>
+          <Chip
+            label="NEW"
+            size="small"
+            color="secondary"
+            className={classes.chip}
+          />
           <CardContent>
-            <Typography variant="overline" color="textSecondary">
-              4,300/mo
+            <Typography variant="overline" className={classes.customOverline}>
+              4 Beds - 3 Baths
             </Typography>
-            <Typography gutterBottom variant="body2">
-              4 Bed/3 Bath charming home
+            <Typography variant="h6">Beautiful 4B apartment</Typography>
+
+            <Typography variant="caption" color="textSecondary">
+              1055 East Evelyn Avenue, CA
             </Typography>
-            <Typography display="block" variant="caption" color="textSecondary">
-              1055 East Evelyn Avenue, CA 94086
-            </Typography>
+
+            <Box className={classes.priceBox}>
+              <Typography
+                variant="caption"
+                color="textSecondary"
+                component="div"
+              >
+                Rent: $4100
+              </Typography>
+              Total: $4700
+            </Box>
           </CardContent>
-          <Divider />
-          <div className={classes.featuresContainer}>
-            <ul className={classes.features}>
-              <li className={classes.feature}>
-                <Chip label="4 bedrooms" variant="outlined" />
-              </li>
-              <li className={classes.feature}>
-                <Chip label="3 bathrooms" variant="outlined" />
-              </li>
-            </ul>
-            <MoreVertOutlined />
-          </div>
         </Card>
       ) : (
         <>

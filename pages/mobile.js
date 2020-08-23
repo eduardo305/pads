@@ -1,6 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import MobileLayout from "../components/MobileLayout2";
+import Thumbnail from "../components/Thumbnail";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,10 +49,28 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const pads = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 const Proto = () => {
   const classes = useStyles();
 
-  return <MobileLayout>mobile layout</MobileLayout>;
+  return (
+    <MobileLayout>
+      <Typography
+        variant="body2"
+        paragraph
+      >{`${pads.length} properties found in Sunnyvale, CA`}</Typography>
+      <ul className={classes.grid}>
+        {pads.map(pad => {
+          return (
+            <li key={pad} className={classes.root}>
+              <Thumbnail pad={pad} />
+            </li>
+          );
+        })}
+      </ul>
+    </MobileLayout>
+  );
 };
 
 export default Proto;

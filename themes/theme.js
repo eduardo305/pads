@@ -8,15 +8,17 @@ const theme = createMuiTheme({
       main: "#556cd6",
       light: "#ecf1fe"
     },
-    secondary: {
-      main: "#19857b"
-    },
     error: {
       main: red.A400
     },
     background: {
       paper: "#fff",
       default: "#f8f9fd"
+    }
+  },
+  typography: {
+    h6: {
+      fontSize: "1rem"
     }
   }
 });

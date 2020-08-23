@@ -72,11 +72,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center"
   },
-  customOverline: {
-    fontSize: "0.6rem",
-    letterSpacing: 1,
-    lineHeight: 2
-  },
+
   actionContainer: {
     padding: "5px 16px",
     justifyContent: "space-between"
@@ -87,12 +83,12 @@ const useStyles = makeStyles(theme => ({
     left: 10
   },
   priceBox: {
-    backgroundColor: "#dee5f3",
-    padding: 5,
+    backgroundColor: theme.palette.primary.light,
+    padding: theme.spacing(1),
     paddingLeft: 10,
     paddingRight: 10,
-    color: "#2063e6",
-    fontWeight: "600",
+    color: theme.palette.primary.main,
+    // fontWeight: "600",
     marginTop: 10,
     width: "max-content",
     borderRadius: 4
@@ -121,7 +117,11 @@ const Thumbnail = ({ pad }) => {
             className={classes.chip}
           />
           <CardContent>
-            <Typography variant="overline" className={classes.customOverline}>
+            <Typography
+              variant="overline"
+              color="primary"
+              className={classes.customOverline}
+            >
               4 Beds - 3 Baths
             </Typography>
             <Typography variant="h6">Beautiful 4B apartment</Typography>
@@ -138,7 +138,7 @@ const Thumbnail = ({ pad }) => {
               >
                 Rent: $4100
               </Typography>
-              Total: $4700
+              <strong>Total: $4700</strong>
             </Box>
           </CardContent>
         </Card>

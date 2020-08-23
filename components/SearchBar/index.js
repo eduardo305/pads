@@ -11,14 +11,15 @@ const useStyles = makeStyles(theme => ({
   root: {
     // padding: "2px 4px",
     display: "flex",
-    alignItems: "center",
+    // alignItems: "center",
     width: "100%",
-    marginBottom: 20
+    height: "100%"
     // backgroundColor: '#e2e2e2'
   },
   input: {
     // marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
+    height: "100%"
   },
   iconButton: {
     padding: 10
@@ -34,11 +35,6 @@ export default function CustomizedInputBase() {
 
   return (
     <Paper component="form" className={classes.root} elevation={0}>
-      <InputBase
-        className={classes.input}
-        placeholder="Search for homes in..."
-        inputProps={{ "aria-label": "search for homes in" }}
-      />
       <IconButton
         type="submit"
         className={classes.iconButton}
@@ -46,6 +42,11 @@ export default function CustomizedInputBase() {
       >
         <SearchIcon />
       </IconButton>
+      <InputBase
+        className={classes.input}
+        placeholder="Search for homes in..."
+        inputProps={{ "aria-label": "search for homes in" }}
+      />
       {/* <Divider className={classes.divider} orientation="vertical" />
 			<IconButton
 				color="primary"

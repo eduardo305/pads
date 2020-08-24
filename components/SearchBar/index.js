@@ -1,3 +1,5 @@
+import { useContext, useCallback } from "react";
+import { debounce } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
@@ -6,6 +8,8 @@ import IconButton from "@material-ui/core/IconButton";
 // import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from "@material-ui/icons/Search";
 // import DirectionsIcon from '@material-ui/icons/Directions';
+
+import { AppContext } from "../../providers/AppProvider";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,7 +35,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CustomizedInputBase() {
+  const { query, setQuery, setPads } = useContext(AppContext);
   const classes = useStyles();
+
+  const handleChange = e => {
+    const term = e.target.value;
+    setQuery(term);
+    // debouncedHandler(term);
+  };
+  const debouncedHandler = useCallback(
+    debounce(term => {
+      console.log("edid");
+      setPads([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    }, 300),
+    []
+  );
 
   return (
     <Paper component="form" className={classes.root} elevation={0}>
@@ -46,15 +64,9 @@ export default function CustomizedInputBase() {
         className={classes.input}
         placeholder="Search for homes in..."
         inputProps={{ "aria-label": "search for homes in" }}
+        value={query}
+        onChange={handleChange}
       />
-      {/* <Divider className={classes.divider} orientation="vertical" />
-			<IconButton
-				color="primary"
-				className={classes.iconButton}
-				aria-label="directions"
-			>
-				<DirectionsIcon />
-			</IconButton> */}
     </Paper>
   );
 }

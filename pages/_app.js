@@ -6,6 +6,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import theme from "../themes/theme";
 
+import { AppProvider } from "../providers/AppProvider";
+
 import SearchBar from "../components/SearchBar";
 import Header from "../components/Header";
 
@@ -29,38 +31,40 @@ export default function MyApp(props) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Container maxWidth="xl">
-          {/* <Header /> */}
+      <AppProvider>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <Container maxWidth="xl">
+            {/* <Header /> */}
 
-          <Component {...pageProps} />
-          <style jsx global>{`
-            html,
-            body,
-            #__next,
-            .MuiContainer-root {
-              height: 100%;
-            }
+            <Component {...pageProps} />
+            <style jsx global>{`
+              html,
+              body,
+              #__next,
+              .MuiContainer-root {
+                height: 100%;
+              }
 
-            ul {
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-            }
+              ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+              }
 
-            div {
-              box-sizing: border-box;
-            }
+              div {
+                box-sizing: border-box;
+              }
 
-            .MuiContainer-root {
-              padding-left: 0 !important;
-              padding-right: 0 !important;
-            }
-          `}</style>
-        </Container>
-      </ThemeProvider>
+              .MuiContainer-root {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+              }
+            `}</style>
+          </Container>
+        </ThemeProvider>
+      </AppProvider>
     </React.Fragment>
   );
 }

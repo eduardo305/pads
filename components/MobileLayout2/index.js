@@ -78,8 +78,6 @@ const useStyles = makeStyles(theme => ({
 const Layout = ({ children }) => {
   const [modal, toggleModal] = useState(false);
   const classes = useStyles();
-  const test = useTheme();
-  console.log("test", test);
 
   const toggleMenu = () => toggleModal(!modal);
 

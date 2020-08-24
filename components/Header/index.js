@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Header({ toggleMenu }) {
+const Header = ({ toggleMenu }) => {
   const classes = useStyles();
 
   return (
@@ -114,4 +114,6 @@ export default function Header({ toggleMenu }) {
       </div>
     </Paper>
   );
-}
+};
+
+export default Header;

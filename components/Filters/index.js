@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -14,6 +14,9 @@ import WifiIcon from "@material-ui/icons/Wifi";
 import BluetoothIcon from "@material-ui/icons/Bluetooth";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+
+import ButtonGroup from "../ButtonGroup";
+import { AppContext } from "../../providers/AppProvider";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -86,7 +89,17 @@ const PrettoSlider = withStyles({
   }
 })(Slider);
 
+const buttons = [
+  { label: "apartment" },
+  { label: "house" },
+  { label: "townhouse" },
+  { label: "studio" }
+];
+
+const furnishingButtons = [{ label: "unfurnished" }, { label: "furnished" }];
+
 export default function SwitchListSecondary() {
+  const { filters, setFilters } = useContext(AppContext);
   const classes = useStyles();
   const [checked, setChecked] = React.useState(["wifi"]);
 
@@ -109,6 +122,34 @@ export default function SwitchListSecondary() {
     setFormats(newFormats);
   };
 
+  const handlePropertyTypeSelection = propertyTypesIndex => {
+    setFilters({
+      ...filters,
+      propertyTypes: propertyTypesIndex.map(index => buttons[index].label)
+    });
+  };
+
+  const handlePriceChange = (e, value) => {
+    setFilters({
+      ...filters,
+      price: value
+    });
+  };
+
+  const handleFurnishingChange = furnishingIndex => {
+    setFilters({
+      ...filters,
+      furnished: !!furnishingIndex[0]
+    });
+  };
+
+  const handlePropertySizeChange = (e, value) => {
+    setFilters({
+      ...filters,
+      propertySize: value
+    });
+  };
+
   return (
     <ul>
       <li>
@@ -118,32 +159,13 @@ export default function SwitchListSecondary() {
               Property Type
             </ListSubheader>
           }
-          className={classes.root}
         >
           <ListItem className={classes.listItem}>
-            <Button
-              variant="contained"
-              color="primary"
-              disableElevation
-              fullWidth
-            >
-              Apartment
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button variant="outlined" color="primary" fullWidth>
-              House
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button variant="outlined" color="primary" fullWidth>
-              Townhouse
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button variant="outlined" color="primary" fullWidth>
-              Studio
-            </Button>
+            <ButtonGroup
+              buttons={buttons}
+              onChange={handlePropertyTypeSelection}
+              allowMultipleSelection
+            />
           </ListItem>
         </List>
       </li>
@@ -157,8 +179,9 @@ export default function SwitchListSecondary() {
             <PrettoSlider
               valueLabelDisplay="auto"
               aria-label="pretto slider"
-              defaultValue={1000}
-              max={20000}
+              defaultValue={30000}
+              max={30000}
+              onChangeCommitted={handlePriceChange}
             />
           </ListItem>
         </List>
@@ -216,8 +239,9 @@ export default function SwitchListSecondary() {
             <PrettoSlider
               valueLabelDisplay="auto"
               aria-label="pretto slider"
-              defaultValue={700}
-              max={8000}
+              defaultValue={10000}
+              max={10000}
+              onChangeCommitted={handlePropertySizeChange}
             />
           </ListItem>
         </List>
@@ -230,22 +254,13 @@ export default function SwitchListSecondary() {
               Furnishing
             </ListSubheader>
           }
-          className={classes.root}
+          className={classes.scrollable}
         >
-          <ListItem>
-            <Button variant="outlined" color="primary" fullWidth>
-              Furnished
-            </Button>
-          </ListItem>
           <ListItem className={classes.listItem}>
-            <Button
-              variant="contained"
-              color="primary"
-              disableElevation
-              fullWidth
-            >
-              Unfurnished
-            </Button>
+            <ButtonGroup
+              buttons={furnishingButtons}
+              onChange={handleFurnishingChange}
+            />
           </ListItem>
         </List>
       </li>

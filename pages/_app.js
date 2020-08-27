@@ -6,7 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import theme from "../themes/theme";
 
-import { AppProvider } from "../providers/AppProvider";
+import { WithApolloAppProvider as AppProvider } from "../providers/AppProvider";
 
 import SearchBar from "../components/SearchBar";
 import Header from "../components/Header";

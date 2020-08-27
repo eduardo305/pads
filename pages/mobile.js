@@ -1,5 +1,6 @@
 import { useContext, useEffect, useCallback } from "react";
 import { debounce } from "lodash";
+import dynamic from "next/dynamic";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -8,11 +9,15 @@ import Thumbnail from "../components/Thumbnail";
 
 import { AppContext } from "../providers/AppProvider";
 
+const DynamicComponentWithNoSSR = dynamic(() => import("../components/Map"), {
+  ssr: false
+});
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    flexDirection: "column"
-
+    flexDirection: "column",
+    cursor: "pointer"
     // backgroundColor: theme
   },
   cell: {
@@ -54,40 +59,48 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Proto = () => {
-  const { query, filters, pads, setPads } = useContext(AppContext);
+  const { query, setQuery, filters, padsContent, pads, setPads } = useContext(
+    AppContext
+  );
   const classes = useStyles();
 
-  const debouncedHandler = useCallback(
-    debounce(term => {
-      console.log("Trigger request for ", term);
-      setPads([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-    }, 300),
-    []
-  );
+  const renderPadsGrid = () => {
+    if (padsContent.loading) {
+      return <div>loading...</div>;
+    } else {
+      return (
+        <>
+          {
+            <Typography
+              variant="body2"
+              paragraph
+            >{`${padsContent.data?.pads?.length} properties found in ${query}`}</Typography>
+          }
+          <ul className={classes.grid}>
+            {padsContent.data?.pads?.map(pad => {
+              return (
+                <li key={pad} className={classes.root}>
+                  <Thumbnail pad={pad} />
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      );
+    }
+  };
 
   useEffect(() => {
-    // console.log("Trigger request for ", query);
-    // console.log("Trigger request for ", filters);
-    debouncedHandler(query);
-  }, [query]);
+    console.log("filters: ", filters);
+    padsContent.getPads({ variables: filters });
+  }, [filters]);
 
-  return (
-    <MobileLayout>
-      <Typography
-        variant="body2"
-        paragraph
-      >{`${pads.length} properties found in ${query}`}</Typography>
-      <ul className={classes.grid}>
-        {pads.map(pad => {
-          return (
-            <li key={pad} className={classes.root}>
-              <Thumbnail pad={pad} />
-            </li>
-          );
-        })}
-      </ul>
-    </MobileLayout>
-  );
+  return <MobileLayout>{renderPadsGrid()}</MobileLayout>;
+  // return (
+  //   <MobileLayout>
+  //     <DynamicComponentWithNoSSR pads={pads} />
+  //   </MobileLayout>
+  // );
 };
 
 export default Proto;

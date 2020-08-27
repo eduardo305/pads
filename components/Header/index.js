@@ -1,4 +1,7 @@
+import { useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { withApollo } from "../../libs/apollo";
+import { useLazyQuery } from "@apollo/client";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
@@ -13,7 +16,11 @@ import SearchOutlined from "@material-ui/icons/SearchOutlined";
 import NotificationsActiveOutlined from "@material-ui/icons/NotificationsActiveOutlined";
 import { Typography } from "@material-ui/core";
 
+import { AppContext } from "../../providers/AppProvider";
 import SearchInput from "../SearchBar";
+
+// import { ALL_CHARACTERS } from '../../gql/allCharacters';
+import { ALL_PADS } from "../../gql/allPads";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,6 +29,7 @@ const useStyles = makeStyles(theme => ({
     gridTemplateColumns: "100px 250px 1fr min-content",
     gridGap: 20,
     alignItems: "center",
+    height: "100%",
     // justifyContent: "space-between",
     width: "100%",
     paddingLeft: 20,
@@ -73,7 +81,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = ({ toggleMenu }) => {
+  const { query, filters, padsContent, setPads } = useContext(AppContext);
   const classes = useStyles();
+
+  const handleSubmit = term => {
+    padsContent.getPads({ variables: filters });
+  };
 
   return (
     <Paper component="div" className={classes.root} elevation={0} square>
@@ -95,7 +108,7 @@ const Header = ({ toggleMenu }) => {
       </div>
 
       <div className={classes.wrapper}>
-        <SearchInput />
+        <SearchInput onSubmit={handleSubmit} />
       </div>
 
       <div className={classes.menuWrapper}>
@@ -116,4 +129,4 @@ const Header = ({ toggleMenu }) => {
   );
 };
 
-export default Header;
+export default withApollo({ ssr: true })(Header);

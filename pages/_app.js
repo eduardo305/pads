@@ -30,6 +30,10 @@ export default function MyApp(props) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css"
+          rel="stylesheet"
+        />
       </Head>
       <AppProvider>
         <ThemeProvider theme={theme}>
@@ -60,6 +64,10 @@ export default function MyApp(props) {
               .MuiContainer-root {
                 padding-left: 0 !important;
                 padding-right: 0 !important;
+              }
+
+              .mapboxgl-map {
+                border-radius: 30px;
               }
             `}</style>
           </Container>

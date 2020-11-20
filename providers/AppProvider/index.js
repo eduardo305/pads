@@ -13,13 +13,22 @@ const initialFilters = {
   furnished: false
 };
 
+const initialLocation = {
+  name: "Sunnyvale",
+  latitude: 37.375180799999995,
+  longitude: -122.0018176
+};
+
 const AppProvider = ({ children }) => {
   const [query, setQuery] = useState("");
   const [pads, setPads] = useState([]);
   const [filters, setFilters] = useState(initialFilters);
+  const [location, setLocation] = useState(initialLocation);
 
   // const [getPads, { loading, error, data }] = useLazyQuery(ALL_PADS);
-  const [getPads, { loading, error, data }] = useLazyQuery(PADS_BY);
+  const [getPads, { loading, error, data = { pads: [] } }] = useLazyQuery(
+    PADS_BY
+  );
 
   return (
     <AppContext.Provider
@@ -28,6 +37,8 @@ const AppProvider = ({ children }) => {
         setQuery,
         pads,
         setPads,
+        location,
+        setLocation,
         filters,
         setFilters,
         padsContent: { getPads, loading, error, data }

@@ -7,7 +7,6 @@ import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Link from "@material-ui/core/Link";
-import Avatar from "@material-ui/core/Avatar";
 import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
@@ -77,6 +76,15 @@ const useStyles = makeStyles(theme => ({
     //   marginLeft: theme.spacing(2)
     // },
     padding: "0 20px"
+  },
+  brand: {
+    height: 81,
+    backgroundColor: "#fff",
+    display: "grid",
+    gridTemplateColumns: "min-content 1fr min-content",
+    gridGap: 10,
+    alignItems: "center",
+    borderBottom: `1px solid ${theme.palette.divider}`
   }
 }));
 
@@ -117,6 +125,7 @@ const Header = ({ toggleMenu }) => {
             <NotificationsActiveOutlined />
           </Badge>
         </IconButton>
+
         <IconButton
           className={classes.iconButton}
           aria-label="menu"

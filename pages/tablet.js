@@ -5,12 +5,9 @@ import { motion, useCycle } from "framer-motion";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import MobileLayout from "../components/MobileLayout";
+import TabletLayout from "../components/TabletLayout";
 import Thumbnail from "../components/Thumbnail";
-import Draggable from "../components/Draggable";
-import AutoComplete from "../components/AutoComplete";
-
-import Chip from "@material-ui/core/Chip";
+import PadQuickView from "../components/PadQuickView";
 
 import { AppContext } from "../providers/AppProvider";
 
@@ -23,6 +20,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     cursor: "pointer"
+    // backgroundColor: theme
   },
   cell: {
     padding: 10
@@ -65,16 +63,6 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     height: "100%"
-  },
-  padsList: {
-    height: 600,
-    overflowY: "scroll"
-  },
-  filterChip: {
-    marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(0),
-    marginRight: theme.spacing(1)
   }
 }));
 
@@ -86,8 +74,7 @@ const Proto = () => {
     padsContent,
     pads,
     setPads,
-    location,
-    setLocation
+    location
   } = useContext(AppContext);
   const [selectedPad, setSelectedPad] = useState({});
   const classes = useStyles();
@@ -107,7 +94,7 @@ const Proto = () => {
           <ul className={classes.grid}>
             {padsContent.data?.pads?.map(pad => {
               return (
-                <li key={pad.id} className={classes.root}>
+                <li key={pad} className={classes.root}>
                   <Thumbnail pad={pad} />
                 </li>
               );
@@ -122,52 +109,23 @@ const Proto = () => {
     setSelectedPad(pad);
   };
 
-  const handleLocationChange = newLocation => {
-    setLocation({
-      ...location,
-      ...newLocation
-    });
-  };
-
   useEffect(() => {
-    console.log("filters ", { ...filters, location: location.name });
-    padsContent.getPads({ variables: { ...filters, location: location.name } });
-  }, [filters, location]);
+    padsContent.getPads({ variables: filters });
+  }, [filters]);
 
   return (
-    <MobileLayout>
+    <TabletLayout>
       <div className={classes.splitContainer}>
         <DynamicComponentWithNoSSR
           location={location}
           pads={padsContent.data.pads}
           onClick={handleMarkerClick}
         />
-        <Draggable>
-          <AutoComplete onLocationChange={handleLocationChange} />
-          <Chip
-            label="Furnished"
-            variant="outlined"
-            onDelete={() => {}}
-            className={classes.filterChip}
-          />
-          <Chip
-            label="3+ Bedrooms"
-            variant="outlined"
-            onDelete={() => {}}
-            className={classes.filterChip}
-          />
-          <ul className={classes.padsList}>
-            {padsContent.data?.pads?.map(pad => {
-              return (
-                <li key={pad.id}>
-                  <Thumbnail pad={pad} />
-                </li>
-              );
-            })}
-          </ul>
-        </Draggable>
+        {selectedPad.title && (
+          <PadQuickView pad={selectedPad} onClose={() => setSelectedPad({})} />
+        )}
       </div>
-    </MobileLayout>
+    </TabletLayout>
   );
 };
 
